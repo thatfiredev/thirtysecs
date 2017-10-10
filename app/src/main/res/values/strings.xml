@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">30 Seconds</string>
+    <string name="version_name">Version 1.0.a (alpha)</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_play">Play Now</string>
+    <string name="action_begin">Begin</string>
+    <string name="action_roll">Roll</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_quit">Quit</string>
+    <string name="loading">Loading</string>
+    <string name="error">There was an Error</string>
+    <string name="title_activity_tutorial">How To Play 30 Seconds</string>
+    <string name="game_rules">30 Seconds is a game where you literally have 30 seconds to get your
+        teammates to guess five of the people, places and things that are displayed on your screen. \n\n
+        At the start of a team\'s turn, the dice must be rolled. This dice is numbered 0, 0, 1, 1, 2, 2. \n
+        At the end of a team\'s turn, the number that was rolled in subtracted from the number of
+        names the team correctly identified during that turn. The team then adds that number of
+        squares to their current score. \n\n
+        For example:\n
+        \t 1. If a team rolled 2 at the start of their turn and correctly identified five names during
+        that turn, they earn 3 points.\n
+        \t 2. If a team rolled 0 and correctly identified four names, they earn 4 points.\n
+        \t 3. If a team correctly identified the same number of names or fewer names than the number
+        rolled, they remain with the same score.\n\n
+        Players are called describers and identifiers. All players must take their turn at being
+        both describers and identifiers. The describer within a team must rotate with each turn.\n\n
+        Describers MAY:\n
+        \t - describe the names in any way they wish, including singing, humming and gesticulating;\n
+        \t - describe the names in any order;\n
+        \t - use the words ‘and’ and ‘the’ that appear in some of the names.\n\n
+        Describers MAY NOT:\n
+        \t - say the actual names on the screen;\n
+        \t - look at the names that must be described before the timer is turned over;\n
+        \t - say any names or words derived from or related to the names they are describing;\n
+        \t - use any ‘sounds-like’ or ‘rhymes-with’ tactics;\n
+        \t - say or refer to the letters of the alphabet;\n
+        \t - use translations;\n
+        \t - point to anything.\n\n
+        The first team to reach 35 points is the winner.</string>
+    <string name="title_form_team">Team Names</string>
+    <string name="team">Team %d</string>
+    <string name="prompt_exit_title">Quit game?</string>
+    <string name="prompt_exit_message">The teams progress will be lost.</string>
+    <string name="prompt_teams">You need at least 2 teams to play</string>
+    <string name="time_up">Time is up</string>
+    <string name="scores">Scores</string>
+    <string name="team_score" formatted="false">%s scored %d pts</string>
+    <string name="prompt_roll" formatted="false">%s is rolling the dice</string>
+    <string name="dice_result" formatted="false">%s\'s Dice: %d</string>
+    <string name="title_activity_dice">Roll the Dice</string>
+
+    <string name="button_changelog">Changelog</string>
+    <string name="button_licenses">Licenses</string>
+    <string name="button_contribute">Contribute on GitHub</string>
+    <string name="button_report">Report Bugs</string>
+
+    <string name="game_over">Game Over</string>
+    <string name="team_won" formatted="false">%s won the game</string>
+    <string name="title_activity_about">About</string>
+</resources>

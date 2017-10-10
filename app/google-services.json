@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "375508268475",
+    "firebase_url": "https://seconds-5c1b4.firebaseio.com",
+    "project_id": "seconds-5c1b4",
+    "storage_bucket": "seconds-5c1b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:375508268475:android:ba807ae6fd0e5353",
+        "android_client_info": {
+          "package_name": "io.github.rosariopfernandes.thirtysecs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "375508268475-onc8marqghk6v21mhkm226ju7rihl8t4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD45Wfjo6TZsQdAz0MXk5IQpcz9hD85C1M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

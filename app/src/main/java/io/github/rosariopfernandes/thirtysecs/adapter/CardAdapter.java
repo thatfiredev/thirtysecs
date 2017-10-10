@@ -76,8 +76,14 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
                 if(isClickable) {
                     MainActivity.correctAnswers++;
                     holder.cardView.setCardBackgroundColor(cardColor);
-                    holder.cardView.setOnClickListener(null);
                 }
+                else
+                {
+                    MainActivity.correctAnswers--;
+                    holder.cardView.setBackgroundColor(ContextCompat.getColor(context,
+                            android.R.color.white));
+                }
+                holder.cardView.setOnClickListener(null);
             }
         });
     }

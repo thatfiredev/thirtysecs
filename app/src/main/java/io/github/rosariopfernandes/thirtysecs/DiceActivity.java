@@ -22,9 +22,8 @@ import java.util.Random;
 
 import io.github.rosariopfernandes.thirtysecs.fragment.AlertDialogFragment;
 
-public class DiceActivity extends AppCompatActivity{
+public class DiceActivity extends AppCompatActivity implements View.OnClickListener{
     private final int rollAnimations = 50;
-    //private final int delayTime = 15;
     private final int[] diceNumbers = new int[] {0, 1, 2, 0, 1, 2};
     private final Random randomGen = new Random();
     private int roll = 6;
@@ -36,6 +35,20 @@ public class DiceActivity extends AppCompatActivity{
     private boolean wasRolled = false;
     private Intent intent;
 
+    @Override
+    public void onClick(View v) {
+        //try {
+        if(wasRolled)
+        {
+            int nr = Integer.parseInt(txtDiceNr.getText().toString());
+            intent.putExtra(MainActivity.PARAM_DICE_ROLL, nr);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
+        else
+            rollDice();
+        //} catch (Exception e) {}
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,32 +69,13 @@ public class DiceActivity extends AppCompatActivity{
         String teamName = intent.getExtras().getString(MainActivity.PARAM_TEAM_NAME, "Unnamed");
         txtCurrentTeam.setText(getString(R.string.prompt_roll, teamName));
 
-        btnRoll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //try {
-                if(wasRolled)
-                {
-                    int nr = Integer.parseInt(txtDiceNr.getText().toString());
-                    intent.putExtra(MainActivity.PARAM_DICE_ROLL, nr);
-                    setResult(RESULT_OK, intent);
-                    finish();
-                }
-                else
-                    rollDice();
-                //} catch (Exception e) {}
-            }
-        });
+        btnRoll.setOnClickListener(this);
+        dice.setOnClickListener(this);
         animationHandler = new Handler() {
             public void handleMessage(Message msg) {
                 txtDiceNr.setText(String.valueOf(diceNumbers[roll]));
             }
         };
-        /*sensorMgr = (SensorManager) getSystemService(SENSOR_SERVICE);
-        boolean accelSupported = sensorMgr.registerListener(this,
-                sensorMgr.getDefaultSensor(SensorManager.SENSOR_ACCELEROMETER),	SensorManager.SENSOR_DELAY_GAME);
-        if (!accelSupported) sensorMgr.unregisterListener(this); //no accelerometer on the device*/
-        //rollDice();
         roll = randomGen.nextInt(6);
         txtDiceNr.setText(String.valueOf(diceNumbers[roll]));
     }
@@ -110,12 +104,6 @@ public class DiceActivity extends AppCompatActivity{
         scaleAnimation.setRepeatMode(ValueAnimator.REVERSE);
         scaleAnimation.setDuration(1000);
 
-        /*rotateAnimation.setInterpolator(new TimeInterpolator() {
-            @Override
-            public float getInterpolation(float v) {
-                return v;
-            }
-        });*/
         AnimatorSet set = new AnimatorSet();
         set.play(rotateAnimation).with(transAnimation).with(scaleAnimation).with(transAnim);
         set.start();

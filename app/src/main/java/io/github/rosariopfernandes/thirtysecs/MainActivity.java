@@ -114,6 +114,16 @@ public class MainActivity extends AppCompatActivity {
                         });
                     }
                     else {
+                        int finalScore = 0;
+                        if(correctAnswers>=(dice+1))
+                            finalScore = (correctAnswers-dice);
+                        correctAnswers = 0;
+                        txtScore.setText(getString(R.string.team_score, currentTeam.getTeamName(),
+                                finalScore));
+                        realm.beginTransaction();
+                        currentTeam.setScore((currentTeam.getScore()+finalScore));
+                        realm.commitTransaction();
+
                         int currentId = currentTeam.getId() + 1;
                         if (currentId < numPlayers)
                             currentTeam = results.get(currentId);
@@ -235,19 +245,9 @@ public class MainActivity extends AppCompatActivity {
                 R.color.colorPrimaryDarker));
         txtTime.setAlpha(1.0f);
         txtTime.setText(R.string.time_up);
-        int finalScore = 0;
-        if(correctAnswers>=(dice+1))
-            finalScore = (correctAnswers-dice);
-        correctAnswers = 0;
-        txtScore.setText(getString(R.string.team_score, currentTeam.getTeamName(),
-                finalScore));
 
         cardAdapter.setClickable(false);
         cardAdapter.notifyDataSetChanged();
-
-        realm.beginTransaction();
-        currentTeam.setScore((currentTeam.getScore()+finalScore));
-        realm.commitTransaction();
 
         fab.show();
     }

@@ -5,6 +5,8 @@
     <string name="action_play">Play Now</string>
     <string name="action_begin">Begin</string>
     <string name="action_roll">Roll</string>
+    <string name="action_replay">Replay</string>
+    <string name="action_next">Next</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_quit">Quit</string>
     <string name="loading">Loading</string>

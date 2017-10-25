@@ -87,4 +87,16 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/btnNext"
+        android:text="@string/action_next"
+        android:layout_gravity="bottom"
+        android:layout_weight="0.05"
+        android:visibility="gone"
+        android:textColor="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Button"
+        style="@style/Widget.AppCompat.Button.Colored" />
+
 </android.support.design.widget.CoordinatorLayout>

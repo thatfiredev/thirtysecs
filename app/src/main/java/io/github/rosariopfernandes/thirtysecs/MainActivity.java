@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutCompat;
@@ -37,7 +36,6 @@ import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmResults;
 
-import static android.view.View.GONE;
 import static io.github.rosariopfernandes.thirtysecs.TutorialActivity.PREFERENCES_TAG;
 
 public class MainActivity extends AppCompatActivity {
@@ -54,13 +52,12 @@ public class MainActivity extends AppCompatActivity {
     public final static String PARAM_DICE_ROLL = "io.github.rosariopfernandes.thirtysecs.dice";
     public final static String PARAM_TEAM_NAME = "io.github.rosariopfernandes.thirtysecs.teamName";
     private TeamScore currentTeam;
-    private FloatingActionButton fab;
     private CountDownTimer timer;
     private ObjectAnimator anim;
     private boolean isShowingScore = false;
     private GameCard card;
     private SharedPreferences prefs;
-    private Button btnPass;
+    private Button btnPass, btnNext;
     private FrameLayout diceView;
 
     @Override
@@ -75,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         txtDice = (TextView) findViewById(R.id.txtDice);
         linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
         btnPass = (Button) findViewById(R.id.btnPass);
+        btnNext = (Button) findViewById(R.id.btnNext);
         diceView = (FrameLayout) findViewById(R.id.dice);
 
         results = realm.where(TeamScore.class).findAll();
@@ -84,9 +82,7 @@ public class MainActivity extends AppCompatActivity {
         currentCard = prefs.getInt(TutorialActivity.LAST_CARD_TAG, -1);
         currentCard++;
 
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-
-        fab.setOnClickListener(new View.OnClickListener() {
+        btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(isShowingScore)
@@ -102,9 +98,9 @@ public class MainActivity extends AppCompatActivity {
                     {
                         txtScore.setText(getString(R.string.team_won, currentTeam.getTeamName()));
                         txtTime.setText(R.string.game_over);
-                        fab.setImageResource(R.drawable.ic_replay_white_24dp);
+                        btnNext.setText(R.string.action_replay);
                         shuffleCards();
-                        fab.setOnClickListener(new View.OnClickListener() {
+                        btnNext.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 for(int i=0; i<results.size();i++)
@@ -202,7 +198,6 @@ public class MainActivity extends AppCompatActivity {
         {
             if(resultCode == RESULT_OK) {
                 dice = data.getExtras().getInt(PARAM_DICE_ROLL, 0);
-                //txtDice.setText(getString(R.string.dice_result, currentTeam.getTeamName(), dice));
                 txtDice.setText(String.valueOf(dice));
                 timer = getTimer(31000);
                 timer.start();
@@ -238,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
         ));
         txtScore.setText("");
         cardAdapter.setClickable(true);
-        fab.hide();
+        btnNext.setVisibility(View.GONE);
     }
 
     private void shuffleCards()
@@ -270,8 +265,8 @@ public class MainActivity extends AppCompatActivity {
         linearLayout.setBackgroundColor(ContextCompat.getColor(MainActivity.this,
                 R.color.colorPrimaryDarker));
 
-        diceView.setVisibility(GONE);
-        btnPass.setVisibility(GONE);
+        diceView.setVisibility(View.GONE);
+        btnPass.setVisibility(View.GONE);
         txtTime.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayoutCompat.LayoutParams.MATCH_PARENT,
                 LinearLayoutCompat.LayoutParams.WRAP_CONTENT,
@@ -283,7 +278,7 @@ public class MainActivity extends AppCompatActivity {
         cardAdapter.setClickable(false);
         cardAdapter.notifyDataSetChanged();
 
-        fab.show();
+        btnNext.setVisibility(View.VISIBLE);
     }
 
     private CountDownTimer getTimer(long time)

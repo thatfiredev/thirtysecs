@@ -48,6 +48,8 @@
     <string name="prompt_roll" formatted="false">%s is rolling the dice</string>
     <string name="dice_result" formatted="false">%s\'s Dice: %d</string>
     <string name="title_activity_dice">Roll the Dice</string>
+    <string name="button_pass">Pass</string>
+    <string name="passed">Passed</string>
 
     <string name="button_changelog">Changelog</string>
     <string name="button_licenses">Licenses</string>

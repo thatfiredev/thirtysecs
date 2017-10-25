@@ -11,6 +11,7 @@ import android.os.CountDownTimer;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Property;
@@ -19,6 +20,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -34,6 +37,7 @@ import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmResults;
 
+import static android.view.View.GONE;
 import static io.github.rosariopfernandes.thirtysecs.TutorialActivity.PREFERENCES_TAG;
 
 public class MainActivity extends AppCompatActivity {
@@ -56,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean isShowingScore = false;
     private GameCard card;
     private SharedPreferences prefs;
+    private Button btnPass;
+    private FrameLayout diceView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,12 +70,12 @@ public class MainActivity extends AppCompatActivity {
         hideSystemUI();
         realm = Realm.getDefaultInstance();
 
-        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);*/
         txtTime = (TextView) findViewById(R.id.txtTime);
         txtScore = (TextView) findViewById(R.id.txtScore);
         txtDice = (TextView) findViewById(R.id.txtDice);
         linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
+        btnPass = (Button) findViewById(R.id.btnPass);
+        diceView = (FrameLayout) findViewById(R.id.dice);
 
         results = realm.where(TeamScore.class).findAll();
         numPlayers = results.size();
@@ -152,6 +158,13 @@ public class MainActivity extends AppCompatActivity {
         rv = (RecyclerView) findViewById(R.id.rv);
         rv.setLayoutManager(new LinearLayoutManager(this));
 
+        btnPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timeUp();
+            }
+        });
+
         card = realm.where(SortedCard.class).findFirst().getCards().get(currentCard++);
         cardAdapter = new CardAdapter(getApplicationContext(), card, currentTeam.getScore());
         scoreAdapter = new ScoreAdapter(getApplicationContext(), results);
@@ -183,15 +196,14 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //TODO: Evitar batota e falhas
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == REQUEST_DICE_ROLL)
         {
             if(resultCode == RESULT_OK) {
                 dice = data.getExtras().getInt(PARAM_DICE_ROLL, 0);
-                txtDice.setText(getString(R.string.dice_result, currentTeam.getTeamName(), dice));
+                //txtDice.setText(getString(R.string.dice_result, currentTeam.getTeamName(), dice));
+                txtDice.setText(String.valueOf(dice));
                 timer = getTimer(31000);
                 timer.start();
                 rv.setAdapter(cardAdapter);
@@ -217,6 +229,13 @@ public class MainActivity extends AppCompatActivity {
     {
         rollDice();
         linearLayout.setBackgroundColor(Color.TRANSPARENT);
+        diceView.setVisibility(View.VISIBLE);
+        btnPass.setVisibility(View.VISIBLE);
+        txtTime.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayoutCompat.LayoutParams.MATCH_PARENT,
+                LinearLayoutCompat.LayoutParams.WRAP_CONTENT,
+                0.3f
+        ));
         txtScore.setText("");
         cardAdapter.setClickable(true);
         fab.hide();
@@ -229,9 +248,10 @@ public class MainActivity extends AppCompatActivity {
             public void execute(Realm realm) {
                 SortedCard db = realm.where(SortedCard.class).findFirst();
                 RealmList <GameCard> cards = db.getCards();
+                int index;
                 for (int i = cards.size() - 1; i > 0; i--)
                 {
-                    int index = (int) (Math.random() * (i+1));
+                    index = (int) (Math.random() * (i+1));
                     Collections.swap(cards, index, i);
                 }
             }
@@ -240,11 +260,25 @@ public class MainActivity extends AppCompatActivity {
 
     private void timeUp()
     {
-        anim.cancel();
+        txtTime.setText(R.string.time_up);
+        if(anim!=null)
+            anim.cancel();
+        else
+            txtTime.setText(R.string.passed);
+        if(timer!=null)
+            timer.cancel();
         linearLayout.setBackgroundColor(ContextCompat.getColor(MainActivity.this,
                 R.color.colorPrimaryDarker));
+
+        diceView.setVisibility(GONE);
+        btnPass.setVisibility(GONE);
+        txtTime.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayoutCompat.LayoutParams.MATCH_PARENT,
+                LinearLayoutCompat.LayoutParams.WRAP_CONTENT,
+                0.9f
+        ));
+
         txtTime.setAlpha(1.0f);
-        txtTime.setText(R.string.time_up);
 
         cardAdapter.setClickable(false);
         cardAdapter.notifyDataSetChanged();

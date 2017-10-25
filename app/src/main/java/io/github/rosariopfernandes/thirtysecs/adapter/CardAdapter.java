@@ -73,12 +73,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isClickable) {
+                if (isClickable) {
                     MainActivity.correctAnswers++;
                     holder.cardView.setCardBackgroundColor(cardColor);
-                }
-                else
-                {
+                } else {
                     MainActivity.correctAnswers--;
                     holder.cardView.setBackgroundColor(ContextCompat.getColor(context,
                             android.R.color.white));
@@ -91,6 +89,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     public void setClickable(boolean isClickable){
         this.isClickable = isClickable;
     }
+
+    //public void setPassed(boolean hasPassed){this.hasPassed = hasPassed;}
 
     public void setScore(int teamScore)
     {

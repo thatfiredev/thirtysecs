@@ -15,26 +15,67 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <LinearLayout
+            android:weightSum="0.9"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <FrameLayout
+                android:id="@+id/dice"
+                android:layout_weight="0.3"
+                android:layout_gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <android.support.v7.widget.CardView
+                app:cardCornerRadius="1dp"
+                app:cardElevation="@dimen/cardview_default_elevation"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="48dp"
+                android:layout_height="48dp">
+
+                <TextView
+                    android:id="@+id/txtDice"
+                    android:text="2"
+                    android:textSize="28sp"
+                    android:layout_margin="4dp"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </android.support.v7.widget.CardView>
+            </FrameLayout>
+
         <TextView
             android:id="@+id/txtTime"
             android:textColor="@android:color/white"
             android:textAlignment="center"
             android:textSize="60sp"
+            android:text="30"
+            android:layout_weight="0.3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btnPass"
+                android:textColor="@android:color/white"
+                android:layout_weight="0.3"
+                android:text="@string/button_pass"
+                android:layout_gravity="center_vertical"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="match_parent"
+                android:layout_height="56dp" />
+
+        </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-
-        <TextView
-            android:id="@+id/txtDice"
-            android:textColor="@android:color/white"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/txtScore"

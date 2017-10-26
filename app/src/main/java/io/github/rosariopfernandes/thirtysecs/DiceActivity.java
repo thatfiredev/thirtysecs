@@ -18,14 +18,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.IOException;
-import java.util.Random;
 
 import io.github.rosariopfernandes.thirtysecs.fragment.AlertDialogFragment;
 
 public class DiceActivity extends AppCompatActivity implements View.OnClickListener{
     private final int rollAnimations = 50;
     private final int[] diceNumbers = new int[] {0, 1, 2, 0, 1, 2};
-    private final Random randomGen = new Random();
     private int roll = 6;
     private Button btnRoll;
     private CardView dice;
@@ -34,6 +32,7 @@ public class DiceActivity extends AppCompatActivity implements View.OnClickListe
     private boolean paused = false;
     private boolean wasRolled = false;
     private Intent intent;
+    private MediaPlayer mp;
 
     @Override
     public void onClick(View v) {
@@ -76,7 +75,7 @@ public class DiceActivity extends AppCompatActivity implements View.OnClickListe
                 txtDiceNr.setText(String.valueOf(diceNumbers[roll]));
             }
         };
-        roll = randomGen.nextInt(6);
+        roll = (int) (Math.random() * 6);
         txtDiceNr.setText(String.valueOf(diceNumbers[roll]));
     }
 
@@ -112,12 +111,11 @@ public class DiceActivity extends AppCompatActivity implements View.OnClickListe
         new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int i = 0; i < rollAnimations; i++) {
+                for (int i = 0; i < rollAnimations; i++)
                     doRoll();
-                }
             }
         }).start();
-        MediaPlayer mp = MediaPlayer.create(this, R.raw.roll);
+        mp = MediaPlayer.create(this, R.raw.roll);
         try {
             mp.prepare();
         } catch (IllegalStateException e) {
@@ -132,7 +130,7 @@ public class DiceActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void doRoll() { // only does a single roll
-        roll = randomGen.nextInt(6);
+        roll = (int) (Math.random() * 6);
         synchronized (getLayoutInflater()) {
             animationHandler.sendEmptyMessage(0);
         }
@@ -151,6 +149,16 @@ public class DiceActivity extends AppCompatActivity implements View.OnClickListe
     public void onPause() {
         super.onPause();
         paused = true;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(mp!=null) {
+            if(mp.isPlaying())
+                mp.stop();
+            mp.release();
+        }
     }
 
     @Override

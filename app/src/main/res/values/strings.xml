@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">30 Seconds</string>
-    <string name="version_name">Version 1.0.a (alpha)</string>
+    <string name="version_name">Version 1.0.b (beta-1)</string>
     <string name="action_settings">Settings</string>
-    <string name="action_play">Play Now</string>
+    <string name="action_play">Play</string>
     <string name="action_begin">Begin</string>
     <string name="action_roll">Roll</string>
     <string name="action_replay">Replay</string>

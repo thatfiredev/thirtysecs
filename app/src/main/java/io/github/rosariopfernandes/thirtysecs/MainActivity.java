@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.content.ContextCompat;
@@ -14,8 +15,6 @@ import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Property;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
@@ -24,6 +23,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.Collections;
 
 import io.github.rosariopfernandes.thirtysecs.adapter.CardAdapter;
@@ -36,7 +36,7 @@ import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmResults;
 
-import static io.github.rosariopfernandes.thirtysecs.TutorialActivity.PREFERENCES_TAG;
+import static io.github.rosariopfernandes.thirtysecs.MenuActivity.PREFERENCES_TAG;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView rv;
@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences prefs;
     private Button btnPass, btnNext;
     private FrameLayout diceView;
+    private RealmList<GameCard> cards;
+    private int size;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +81,11 @@ public class MainActivity extends AppCompatActivity {
         numPlayers = results.size();
         currentTeam = results.first();
         prefs = getSharedPreferences(PREFERENCES_TAG, MODE_PRIVATE);
-        currentCard = prefs.getInt(TutorialActivity.LAST_CARD_TAG, -1);
+        currentCard = prefs.getInt(MenuActivity.LAST_CARD_TAG, -1);
+        cards =realm.where(SortedCard.class).findFirst().getCards();
+        size = cards.size();
+        if(currentCard>=size)
+            currentCard = -1;
         currentCard++;
 
         btnNext.setOnClickListener(new View.OnClickListener() {
@@ -132,8 +138,8 @@ public class MainActivity extends AppCompatActivity {
                         else
                             currentTeam = results.get(0);
 
-                        RealmList<GameCard> cards =realm.where(SortedCard.class).findFirst().getCards();
-                        int size = cards.size();
+                        cards =realm.where(SortedCard.class).findFirst().getCards();
+                        size = cards.size();
                         if(currentCard>=size)
                             currentCard = 0;
                         card = cards.get(currentCard++);
@@ -142,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                         cardAdapter.notifyDataSetChanged();
 
                         SharedPreferences.Editor editor = prefs.edit();
-                        editor.putInt(TutorialActivity.LAST_CARD_TAG, currentCard);
+                        editor.putInt(MenuActivity.LAST_CARD_TAG, currentCard);
                         editor.apply();
                         editor.commit();
                     }
@@ -161,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        card = realm.where(SortedCard.class).findFirst().getCards().get(currentCard++);
+        card = realm.where(SortedCard.class).findFirst().getCards().get(currentCard);
         cardAdapter = new CardAdapter(getApplicationContext(), card, currentTeam.getScore());
         scoreAdapter = new ScoreAdapter(getApplicationContext(), results);
         startPlaying();
@@ -174,22 +180,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutAnimation(controller);
         recyclerView.getAdapter().notifyDataSetChanged();
         recyclerView.scheduleLayoutAnimation();
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -255,6 +245,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void timeUp()
     {
+        MediaPlayer mp = MediaPlayer.create(MainActivity.this, R.raw.jingle);
+        try {
+            mp.prepare();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        mp.start();
         txtTime.setText(R.string.time_up);
         if(anim!=null)
             anim.cancel();
@@ -287,9 +286,19 @@ public class MainActivity extends AppCompatActivity {
             public void onTick(long millisUntilFinished) {
                 secsLeft = (int) millisUntilFinished/1000;
                 txtTime.setText(String.valueOf(secsLeft));
-                if(secsLeft == 5)
+                if(secsLeft == 6) {
+                    MediaPlayer mp = MediaPlayer.create(MainActivity.this, R.raw.clock);
+                    try {
+                        mp.prepare();
+                    } catch (IllegalStateException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    mp.start();
                     getAnimation(txtTime, View.ALPHA, 0, ValueAnimator.INFINITE,
                             ValueAnimator.REVERSE, 150).start();
+                }
             }
 
             public void onFinish() {

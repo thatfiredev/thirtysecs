@@ -161,8 +161,16 @@ public class MenuActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        //TODO: Add Dialog for when the user is about to close the app
+        //super.onBackPressed();
+        if(mViewPager.getCurrentItem() == 0)
+        {
+            super.onBackPressed();
+            //TODO: Add Dialog for when the user is about to close the app
+        }
+        else
+        {
+            mViewPager.setCurrentItem(0, true);
+        }
     }
 
     private void startGame()

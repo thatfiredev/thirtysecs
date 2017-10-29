@@ -13,11 +13,11 @@
     <string name="error">There was an Error</string>
     <string name="title_activity_tutorial">How To Play 30 Seconds</string>
     <string name="game_rules">30 Seconds is a game where you literally have 30 seconds to get your
-        teammates to guess five of the people, places and things that are displayed on your screen. \n\n
-        At the start of a team\'s turn, the dice must be rolled. This dice is numbered 0, 0, 1, 1, 2, 2. \n
+        teammates to guess five of the people, places and things that are displayed on your screen.\n\n
+        At the start of a team\'s turn, the dice must be rolled. This dice is numbered 0, 0, 1, 1, 2, 2.\n
         At the end of a team\'s turn, the number that was rolled is subtracted from the number of
         names the team correctly identified during that turn. The team then adds that number of
-        squares to their current score. \n\n
+        squares to their current score.\n\n
         For example:\n
         \t 1. If a team rolled 2 at the start of their turn and correctly identified five names during
         that turn, they earn 3 points.\n

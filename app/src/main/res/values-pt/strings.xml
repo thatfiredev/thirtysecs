@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">30 Segundos</string>
+    <string name="version_name">Versão 1.0.b (beta-1)</string>
+    <string name="action_settings">Definições</string>
+    <string name="action_play">Jogar</string>
+    <string name="action_begin">Começar</string>
+    <string name="action_roll">Lançar</string>
+    <string name="action_replay">Jogar Novamente</string>
+    <string name="action_next">Continuar</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="action_quit">Sair</string>
+    <string name="loading">Carregando</string>
+    <string name="error">Ocorreu um erro</string>
+    <string name="title_activity_tutorial">Como jogar 30 segundos</string>
+    <string name="game_rules">30 segundos é um jogo onde você tem, literalmente, 30 segundos para fazer
+        com que os seus colegas de equipa advinhem 5 palavras que são mostradas no seu ecrã.\n\n
+Ao começar a rodada de uma equipa, é rolado um dado. Esse dado contém os números 0, 0, 1, 1, 2, 2.\n
+No fim de cada rodada, o número que saiu no dado é subtraído do número de palavras que a equipa
+        identificou correctamente durante essa rodada. A equipa recebe então esse número de pontos.\n\n
+Por exemplo:\n
+\t 1. Se uma equipa lançou o dado 2 e acertou cinco nomes durante essa rodada, eles ganham 3 pontos.\n
+\t 2. Se uma equipa lançou o dado 0 e acertou quatro nomes, eles ganham 3 pontos.\n
+\t 3. Se uma equipa acerta o mesmo número ou um número menor de palavras do que o número do dado,
+        a equipa continua com a mesma pontuação.\n\n
+
+Os jogadores podem ser explicadores ou advinhos. Todos jogadores devem ser tanto explicadores como
+        advinhos pelo menos 1 vez no jogo. À cada rodada o explicador deve ser alterado dentro de uma equipa.\n\n
+
+Os explicadores PODEM:\n
+\t - Descrever as palavras como quiserem, utilizando canções e gestos se necessário; \n
+\t - Descrever as palavras em qualquer ordem;\n
+\t - Utilizar os artigos definidos que constam em alguns dos nomes.\n\n
+
+Os explicadores NÃO PODEM:\n
+\t - Dizer a palavra que está no ecrã;\n
+\t - Dizer qualquer palavra que deriva ou que está relacionada à palavra que ele está a descrever;\n
+\t - Dizer uma palavra que rima com ou que soa como a palavra que está no ecrã;\n
+\t - Dizer as letras do alfabeto;\n
+\t - Traduzir a palavra;\n
+\t - Apontar para sítio algum.\n\n
+
+A primeira equipa que conseguir 35 pontos vence o jogo.</string>
+    <string name="title_form_team">Nome das equipas</string>
+    <string name="team">Equipa %d</string>
+    <string name="prompt_exit_title">Sair do jogo?</string>
+    <string name="prompt_exit_message">O progresso das equipas será perdido.</string>
+    <string name="prompt_teams">São necessárias 2 equipas no mínimo</string>
+    <string name="time_up">Acabou o tempo</string>
+    <string name="scores">Pontuação</string>
+    <string name="team_score">%s conseguiu %d pts</string>
+    <string name="prompt_roll">%s irá lançar o dado</string>
+    <string name="dice_result">%d é o dado de %s</string>
+    <string name="title_activity_dice">Lançar o dado</string>
+    <string name="button_pass">Terminar</string>
+    <string name="passed">Terminado</string>
+    <string name="button_changelog">Alterações</string>
+    <string name="button_licenses">Licenças</string>
+    <string name="button_contribute">Contribuir no GitHub</string>
+    <string name="button_report">Reportar Bugs</string>
+    <string name="game_over">Fim do Jogo</string>
+    <string name="team_won">$s ganharam o jogo</string>
+    <string name="title_activity_about">Sobre o jogo</string>
+</resources>

@@ -27,7 +27,7 @@ public class DiceActivity extends AppCompatActivity implements View.OnClickListe
     private int roll = 6;
     private Button btnRoll;
     private CardView dice;
-    private TextView txtDiceNr, txtCurrentTeam;
+    private TextView txtDiceNr;
     private Handler animationHandler;
     private boolean paused = false;
     private boolean wasRolled = false;
@@ -36,7 +36,6 @@ public class DiceActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        //try {
         if(wasRolled)
         {
             int nr = Integer.parseInt(txtDiceNr.getText().toString());
@@ -46,7 +45,6 @@ public class DiceActivity extends AppCompatActivity implements View.OnClickListe
         }
         else
             rollDice();
-        //} catch (Exception e) {}
     }
 
     @Override
@@ -61,11 +59,11 @@ public class DiceActivity extends AppCompatActivity implements View.OnClickListe
         setSupportActionBar(toolbar);*/
         dice = (CardView) findViewById(R.id.dice);
         txtDiceNr = (TextView) findViewById(R.id.txtDiceNr);
-        txtCurrentTeam = (TextView) findViewById(R.id.txtCurrentTeam);
         btnRoll = (Button) findViewById(R.id.btnRoll);
 
         intent = getIntent();
         String teamName = intent.getExtras().getString(MainActivity.PARAM_TEAM_NAME, "Unnamed");
+        TextView txtCurrentTeam = (TextView) findViewById(R.id.txtCurrentTeam);
         txtCurrentTeam.setText(getString(R.string.prompt_roll, teamName));
 
         btnRoll.setOnClickListener(this);
@@ -156,9 +154,14 @@ public class DiceActivity extends AppCompatActivity implements View.OnClickListe
     protected void onStop() {
         super.onStop();
         if(mp!=null) {
-            if(mp.isPlaying())
-                mp.stop();
-            mp.release();
+            try {
+                if (mp.isPlaying())
+                    mp.stop();
+                mp.release();
+            }catch (IllegalStateException e)
+            {
+                //The MediaPlayer is null or has been released.
+            }
         }
     }
 

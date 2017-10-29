@@ -127,6 +127,7 @@ public class DiceActivity extends AppCompatActivity implements View.OnClickListe
 
         wasRolled = true;
         btnRoll.setText(R.string.action_begin);
+        dice.setOnClickListener(null);
     }
 
     private void doRoll() { // only does a single roll

@@ -15,7 +15,7 @@
     <string name="game_rules">30 Seconds is a game where you literally have 30 seconds to get your
         teammates to guess five of the people, places and things that are displayed on your screen. \n\n
         At the start of a team\'s turn, the dice must be rolled. This dice is numbered 0, 0, 1, 1, 2, 2. \n
-        At the end of a team\'s turn, the number that was rolled in subtracted from the number of
+        At the end of a team\'s turn, the number that was rolled is subtracted from the number of
         names the team correctly identified during that turn. The team then adds that number of
         squares to their current score. \n\n
         For example:\n
@@ -32,7 +32,6 @@
         \t - use the words ‘and’ and ‘the’ that appear in some of the names.\n\n
         Describers MAY NOT:\n
         \t - say the actual names on the screen;\n
-        \t - look at the names that must be described before the timer is turned over;\n
         \t - say any names or words derived from or related to the names they are describing;\n
         \t - use any ‘sounds-like’ or ‘rhymes-with’ tactics;\n
         \t - say or refer to the letters of the alphabet;\n

@@ -41,7 +41,6 @@
     <Button
         android:id="@+id/btnRoll"
         android:text="@string/action_roll"
-        android:textColor="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_gravity="bottom"

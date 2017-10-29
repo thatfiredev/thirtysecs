@@ -100,6 +100,14 @@ public class MainActivity extends AppCompatActivity {
                     runLayoutAnimation(rv, R.anim.layout_animation_slide_right);
                     txtDice.setText("");
                     txtTime.setText(R.string.scores);
+                    int finalScore = 0;
+                    if(correctAnswers>=(dice+1))
+                        finalScore = (correctAnswers-dice);
+                    txtScore.setText(getString(R.string.team_score, currentTeam.getTeamName(),
+                            finalScore));
+                    realm.beginTransaction();
+                    currentTeam.setScore((currentTeam.getScore()+finalScore));
+                    realm.commitTransaction();
                     if(currentTeam.getScore()>=35)
                     {
                         txtScore.setText(getString(R.string.team_won, currentTeam.getTeamName()));
@@ -122,15 +130,6 @@ public class MainActivity extends AppCompatActivity {
                         });
                     }
                     else {
-                        int finalScore = 0;
-                        if(correctAnswers>=(dice+1))
-                            finalScore = (correctAnswers-dice);
-                        correctAnswers = 0;
-                        txtScore.setText(getString(R.string.team_score, currentTeam.getTeamName(),
-                                finalScore));
-                        realm.beginTransaction();
-                        currentTeam.setScore((currentTeam.getScore()+finalScore));
-                        realm.commitTransaction();
 
                         int currentId = currentTeam.getId() + 1;
                         if (currentId < numPlayers)
@@ -138,11 +137,12 @@ public class MainActivity extends AppCompatActivity {
                         else
                             currentTeam = results.get(0);
 
+                        correctAnswers = 0;
                         cards =realm.where(SortedCard.class).findFirst().getCards();
                         size = cards.size();
                         if(currentCard>=size)
                             currentCard = 0;
-                        card = cards.get(currentCard++);
+                        card = cards.get(++currentCard);
                         cardAdapter.setGameCard(card);
                         cardAdapter.setScore(currentTeam.getScore());
                         cardAdapter.notifyDataSetChanged();
@@ -327,7 +327,8 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         correctAnswers = 0;
         realm.close();
-        timer.cancel();
+        if(timer!=null)
+            timer.cancel();
     }
     private void hideSystemUI()
     {

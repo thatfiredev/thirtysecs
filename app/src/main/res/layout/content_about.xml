@@ -37,14 +37,15 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp" />
 
-            <TextView
-                android:layout_marginTop="16dp"
-                android:text="@string/app_name"
-                android:textSize="24sp"
-                android:textAlignment="center"
-                android:textColor="@android:color/black"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/app_name"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
             <TextView
                 android:text="@string/version_name"
@@ -54,12 +55,13 @@
                 android:layout_height="wrap_content" />
 
                 <TextView
-                    android:text="Developed By"
-                    android:layout_marginTop="24dp"
-                    android:textAlignment="center"
-                    android:textColor="@android:color/darker_gray"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Developed By"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:text="Rosário Pereira Fernandes"
@@ -71,11 +73,12 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="Word List By"
                     android:textAlignment="center"
-                    android:textColor="@android:color/darker_gray"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:text="Danilo Fonseca"
@@ -97,7 +100,6 @@
             android:layout_height="56dp"
             android:layout_gravity="bottom"
             android:enabled="false"
-            android:textColor="@android:color/white"
             android:textAppearance="@style/TextAppearance.AppCompat.Button"
             style="@style/Widget.AppCompat.Button.Colored" />
 
@@ -108,7 +110,6 @@
             android:layout_height="56dp"
             android:layout_gravity="bottom"
             android:enabled="false"
-            android:textColor="@android:color/white"
             android:textAppearance="@style/TextAppearance.AppCompat.Button"
             style="@style/Widget.AppCompat.Button.Colored" />
 
@@ -119,7 +120,6 @@
             android:layout_height="56dp"
             android:layout_gravity="bottom"
             android:enabled="false"
-            android:textColor="@android:color/white"
             android:textAppearance="@style/TextAppearance.AppCompat.Button"
             style="@style/Widget.AppCompat.Button.Colored" />
 
@@ -130,7 +130,6 @@
             android:layout_height="56dp"
             android:layout_gravity="bottom"
             android:enabled="false"
-            android:textColor="@android:color/white"
             android:textAppearance="@style/TextAppearance.AppCompat.Button"
             style="@style/Widget.AppCompat.Button.Colored" />
 

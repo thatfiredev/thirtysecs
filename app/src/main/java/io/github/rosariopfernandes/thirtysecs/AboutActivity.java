@@ -3,6 +3,7 @@ package io.github.rosariopfernandes.thirtysecs;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 
 public class AboutActivity extends AppCompatActivity {
 
@@ -21,6 +22,8 @@ public class AboutActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        Toast.makeText(this, "Some features are not available yet", Toast.LENGTH_SHORT).show();
     }
 
     private void hideSystemUI()

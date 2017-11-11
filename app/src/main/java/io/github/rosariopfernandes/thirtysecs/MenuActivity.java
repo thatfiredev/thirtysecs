@@ -18,10 +18,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.InputStream;
+import java.util.Collections;
 
+import io.github.rosariopfernandes.thirtysecs.dao.GameCard;
 import io.github.rosariopfernandes.thirtysecs.dao.SortedCard;
 import io.github.rosariopfernandes.thirtysecs.dao.TeamScore;
 import io.realm.Realm;
+import io.realm.RealmList;
 
 public class MenuActivity extends AppCompatActivity {
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -112,6 +115,7 @@ public class MenuActivity extends AppCompatActivity {
             }, new Realm.Transaction.OnSuccess() {
                 @Override
                 public void onSuccess() {
+                    shuffleCards();
                     btnPlay.setText(R.string.action_play);
                     btnPlay.setEnabled(true);
                 }
@@ -119,6 +123,7 @@ public class MenuActivity extends AppCompatActivity {
                 @Override
                 public void onError(Throwable error) {
                     ((TextView) findViewById(R.id.txtDescription)).setText(error.getMessage());
+                    error.printStackTrace();
                     btnPlay.setText(R.string.error);
                 }
             });
@@ -128,6 +133,23 @@ public class MenuActivity extends AppCompatActivity {
             btnPlay.setText(R.string.action_play);
             btnPlay.setEnabled(true);
         }
+    }
+
+    private void shuffleCards()
+    {
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm){
+                SortedCard db = realm.where(SortedCard.class).findFirst();
+                RealmList<GameCard> cards = db.getCards();
+                int index;
+                for (int i = cards.size() - 1; i > 0; i--)
+                {
+                    index = (int) (Math.random() * (i+1));
+                    Collections.swap(cards, index, i);
+                }
+            }
+        });
     }
 
     private void hideSystemUI()

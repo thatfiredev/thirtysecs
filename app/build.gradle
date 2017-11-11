@@ -8,7 +8,7 @@ android {
         applicationId "io.github.rosariopfernandes.thirtysecs"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 2
+        versionCode 3
         versionName "1.0.b"
         vectorDrawables.useSupportLibrary = true
     }
@@ -18,14 +18,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    /*splits {
-        abi {
-            enable true
-            reset()
-            include 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'mips', 'x86', 'x86_64'
-            universalApk false
-        }
-    }*/
 }
 
 dependencies {

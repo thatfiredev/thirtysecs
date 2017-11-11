@@ -59,6 +59,6 @@ A primeira equipa que conseguir 35 pontos vence o jogo.</string>
     <string name="button_contribute">Contribuir no GitHub</string>
     <string name="button_report">Reportar Bugs</string>
     <string name="game_over">Fim do Jogo</string>
-    <string name="team_won">$s ganharam o jogo</string>
+    <string name="team_won">%s ganharam o jogo</string>
     <string name="title_activity_about">Sobre o jogo</string>
 </resources>

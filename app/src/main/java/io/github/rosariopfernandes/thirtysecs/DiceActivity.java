@@ -55,8 +55,6 @@ public class DiceActivity extends AppCompatActivity implements View.OnClickListe
         setResult(RESULT_CANCELED);
         hideSystemUI();
 
-        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);*/
         dice = (CardView) findViewById(R.id.dice);
         txtDiceNr = (TextView) findViewById(R.id.txtDiceNr);
         btnRoll = (Button) findViewById(R.id.btnRoll);

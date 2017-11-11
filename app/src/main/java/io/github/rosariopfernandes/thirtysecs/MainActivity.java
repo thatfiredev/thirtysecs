@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
                         correctAnswers = 0;
                         cards =realm.where(SortedCard.class).findFirst().getCards();
                         size = cards.size();
-                        if(currentCard>=size)
+                        if(currentCard>=(size-1))
                             currentCard = 0;
                         card = cards.get(++currentCard);
                         cardAdapter.setGameCard(card);
@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
     {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
-            public void execute(Realm realm) {
+            public void execute(Realm realm){
                 SortedCard db = realm.where(SortedCard.class).findFirst();
                 RealmList <GameCard> cards = db.getCards();
                 int index;

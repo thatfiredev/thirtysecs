@@ -1,6 +1,7 @@
 package io.github.rosariopfernandes.thirtysecs;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
@@ -18,7 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.InputStream;
-import java.util.Collections;
 
 import io.github.rosariopfernandes.thirtysecs.dao.GameCard;
 import io.github.rosariopfernandes.thirtysecs.dao.SortedCard;
@@ -35,7 +35,10 @@ public class MenuActivity extends AppCompatActivity {
     private Button btnPlay;
 
     public static final String PREFERENCES_TAG = "io.github,rosariopfernandes.thirtysecs.prefs";
-    public static final String LAST_CARD_TAG = "io.github,rosariopfernandes.thirtysecs.prefs";
+    public static final String LAST_CARD_TAG = "io.github,rosariopfernandes.thirtysecs.prefs.lastCard";
+    public static final String DECK_SIZE_TAG = "io.github,rosariopfernandes.thirtysecs.prefs.deck";
+
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,8 @@ public class MenuActivity extends AppCompatActivity {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        prefs = getSharedPreferences(PREFERENCES_TAG, MODE_PRIVATE);
 
         btnPlay = (Button) findViewById(R.id.btnPlay);
         btnPlay.setOnClickListener(new View.OnClickListener() {
@@ -103,53 +108,69 @@ public class MenuActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        SortedCard cards = realm.where(SortedCard.class).findFirst();
-        if(cards == null)
+        final SortedCard sortedCards = realm.where(SortedCard.class).findFirst();
+        if(sortedCards == null)
         {
-            final InputStream is = getResources().openRawResource(R.raw.words);
-            realm.executeTransactionAsync(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    realm.createOrUpdateObjectFromJson(SortedCard.class, is);
-                }
-            }, new Realm.Transaction.OnSuccess() {
-                @Override
-                public void onSuccess() {
-                    shuffleCards();
-                    btnPlay.setText(R.string.action_play);
-                    btnPlay.setEnabled(true);
-                }
-            }, new Realm.Transaction.OnError() {
-                @Override
-                public void onError(Throwable error) {
-                    ((TextView) findViewById(R.id.txtDescription)).setText(error.getMessage());
-                    error.printStackTrace();
-                    btnPlay.setText(R.string.error);
-                }
-            });
+            readInsertCards(sortedCards);
         }
         else
         {
+            int currentDeckSize = prefs.getInt(DECK_SIZE_TAG, 999);
+            /*if(currentDeckSize<) TODO: Read size on the file and check if its larger
+            if(sortedCards.getCards().size())*/
             btnPlay.setText(R.string.action_play);
             btnPlay.setEnabled(true);
         }
     }
 
-    private void shuffleCards()
+    private void readInsertCards(final SortedCard sortedCards)
+    {
+        final InputStream is = getResources().openRawResource(R.raw.words);
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.createOrUpdateObjectFromJson(SortedCard.class, is);
+            }
+        }, new Realm.Transaction.OnSuccess() {
+            @Override
+            public void onSuccess() {
+                shuffleCards(sortedCards);
+                btnPlay.setText(R.string.action_play);
+                btnPlay.setEnabled(true);
+            }
+        }, new Realm.Transaction.OnError() {
+            @Override
+            public void onError(Throwable error) {
+                ((TextView) findViewById(R.id.txtDescription)).setText(error.getMessage());
+                error.printStackTrace();
+                btnPlay.setText(R.string.error);
+            }
+        });
+    }
+
+    private void shuffleCards(final SortedCard sortedCard)
     {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm){
-                SortedCard db = realm.where(SortedCard.class).findFirst();
-                RealmList<GameCard> cards = db.getCards();
+                RealmList<GameCard> cards = sortedCard.getCards();
                 int index;
                 for (int i = cards.size() - 1; i > 0; i--)
                 {
                     index = (int) (Math.random() * (i+1));
-                    Collections.swap(cards, index, i);
+                    swap(cards, index, i);
                 }
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putInt(DECK_SIZE_TAG, cards.size());
+                editor.apply();
+                editor.commit();
             }
         });
+    }
+
+    private void swap(RealmList<GameCard> list, int i, int j) {
+        final RealmList l = list;
+        l.set(i, l.set(j, l.get(i)));
     }
 
     private void hideSystemUI()

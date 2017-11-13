@@ -23,6 +23,20 @@ public class AboutActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.btnChangeLog).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                builder.enableUrlBarHiding();
+                builder.setSecondaryToolbarColor(ContextCompat.getColor(this,
+                        R.color.colorPrimaryDark));
+                builder.setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimary));
+                builder.addDefaultShareMenuItem();
+                CustomTabsIntent customTabsIntent = builder.build();
+                customTabsIntent.launchUrl(this, Uri.parse("http://eazy.dstv.com/pt/mz/contact"));*/
+            }
+        });
+
         Toast.makeText(this, "Some features are not available yet", Toast.LENGTH_SHORT).show();
     }
 
